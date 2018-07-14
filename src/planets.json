@@ -1,0 +1,74 @@
+[
+  {
+    "id": 0,
+    "name": "Mercury",
+    "picture": "images/mercury.jpeg",
+    "age": 4503000000,
+    "location": "Solar System",
+    "presenceOfLifeOnThePlanet": false,
+    "color": "dark gray"
+  },
+  {
+    "id": 1,
+    "name": "Venus",
+    "picture": "images/venus.jpeg",
+    "age": 4503000000,
+    "location": "Solar System",
+    "presenceOfLifeOnThePlanet": false,
+    "color": "orange"
+  },
+  {
+    "id": 2,
+    "name": "Earth",
+    "picture": "images/earth.jpeg",
+    "age": 4543000000,
+    "location": "Solar System",
+    "presenceOfLifeOnThePlanet": true,
+    "color": "blue"
+  },
+  {
+    "id": 3,
+    "name": "Mars",
+    "picture": "images/mars.jpeg",
+    "age": 4603000000,
+    "location": "Solar System",
+    "presenceOfLifeOnThePlanet": false,
+    "color": "red"
+  },
+  {
+    "id": 4,
+    "name": "Jupiter",
+    "picture": "images/jupiter.jpeg",
+    "age": 4503000000,
+    "location": "Solar System",
+    "presenceOfLifeOnThePlanet": false,
+    "color": "white"
+  },
+  {
+    "id": 5,
+    "name": "Saturn",
+    "picture": "images/saturn.jpeg",
+    "age": 4503000000,
+    "location": "Solar System",
+    "presenceOfLifeOnThePlanet": false,
+    "color": "yellowish-brown"
+  },
+  {
+    "id": 6,
+    "name": "Uranus",
+    "picture": "images/uranus.jpeg",
+    "age": 4503000000,
+    "location": "Solar System",
+    "presenceOfLifeOnThePlanet": false,
+    "color": "blue-green"
+  },
+  {
+    "id": 7,
+    "name": "Neptune",
+    "picture": "images/neptune.jpeg",
+    "age": 4503000000,
+    "location": "Solar System",
+    "presenceOfLifeOnThePlanet": false,
+    "color": "blue"
+  }
+]
