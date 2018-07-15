@@ -20,7 +20,7 @@
   </head>
   <body>
     <div class="container">
-      <header class="row">
+      <header class="row header">
           <h1 class="text-center container">Shop of planets</h1>
       </header>
 
@@ -30,18 +30,20 @@
     </div>
 
     <div id="planetTemplate" style="display: none;">
-      <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="planet-card panel panel-default panel-planet">
+      <div class="col-sm-12 col-md-6 col-lg-6 mb-30">
+        <div class="planet-card">
           <div class="panel-heading">
             <h3 class="panel-title"></h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body clearfix">
             <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="" data-holder-rendered="true">
             <p class="info"><strong>Age</strong>: <span class="planet-age"></span></p>
             <p class="info"><strong>Location</strong>: <span class="planet-location"></span></p>
             <p class="info"><strong>Color</strong>: <span class="planet-color"></span></p>
             <p class="info"><span class="planet-presence-of-life-on-the-planet"></span></p>
+            <p class="info"><strong>Owner</strong>: <span class="planet-owner"></span></p>
             <button class="btn btn-info btn-buy" type="button" data-id="0">Buy this planet</button>
+            <button class="btn btn-danger btn-sale" style="display: none"type="button" data-id="0">Sale this planet</button>
           </div>
         </div>
       </div>

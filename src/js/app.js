@@ -1,10 +1,13 @@
 // let web3;
 let linkToApp;
+let currentAccount ='kk';
 
 class App {
   constructor() {
     this.web3Provider = null,
     this.contracts = {},
+
+    this.getCurrentAccount();
 
     this.init();
     this.initWeb3('http://localhost:7545');
@@ -17,6 +20,18 @@ class App {
 
   }
 
+  getCurrentAccount(instance = this){
+    web3.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.error(error);
+      }
+
+      // get first (base) account
+      instance.currentAccount = accounts[0];
+    })
+
+  }
+
   init() {
     $.getJSON('../planets.json', function(data) {
       var planetsRow = $('#planetsRow');
@@ -26,9 +41,11 @@ class App {
         planetTemplate.find('img').attr('src', data[i].picture);
         planetTemplate.find('.planet-age').text((data[i].age).toString().replace(/(?=(\d{3})+$)/g, ',')+' years');
         planetTemplate.find('.planet-location').text(data[i].location);
-        planetTemplate.find('.planet-presence-of-life-on-the-planet').text( data[i].presenceOfLifeOnThePlanet ? "On this planet found signs of life" : "There are no signs of life on this planet" );
+        planetTemplate.find('.planet-presence-of-life-on-the-planet').text( data[i].presenceOfLifeOnThePlanet ? "On this planet found signs of life" : "There're no signs of life on this planet" );
         planetTemplate.find('.planet-color').text(data[i].color);
+        planetTemplate.find('.planet-owner').text('No one yet');
         planetTemplate.find('.btn-buy').attr('data-id', data[i].id);
+        planetTemplate.find('.btn-sale').attr('data-id', data[i].id);
         planetsRow.append(planetTemplate.html());
       }
     });
@@ -65,21 +82,41 @@ class App {
 
   bindEvents() {
     $(document).on('click', '.btn-buy', this.handleBuy);
+    $(document).on('click', '.btn-sale', this.handleSale);
   }
 
   markBuyed( customers, account ) {
     let buyInstance;
 
-    this.contracts.Buy.deployed().then(function(instance) {
+    this.contracts.Buy.deployed()
+    .then(function(instance) {
       buyInstance = instance;
 
       return buyInstance.getCustomers.call();
-    }).then(function(customers) {
-      for (let i = 0; i < customers.length; i++) {
-        if (customers[i] !== '0x0000000000000000000000000000000000000000') {
-          $('.panel-planet').eq(i).find('.btn-buy').text('Buyed').attr('disabled', true).removeClass('btn-info').addClass('btn-success');
+    })
+    .then(function(customers) {
+
+      web3.eth.getAccounts(function(error, accounts) {
+        if (error) {
+          console.error(error);
         }
-      }
+
+        // get first (base) account
+        let currentAccount = accounts[0];
+
+        for (let i = 0; i < customers.length; i++) {
+          if (customers[i] !== '0x0000000000000000000000000000000000000000') {
+            $('.planet-card').eq(i).find('.btn-buy').text('Buyed').attr('disabled', false).removeClass('btn-info').addClass('btn-success');
+            $('.planet-card').eq(i).find('.planet-owner').text('This planet was bought by ' + customers[i]);
+            if (currentAccount == customers[i]){
+              $('.planet-card').eq(i).find('.btn-sale').show();
+            }
+          }
+        }
+      })
+
+
+
     }).catch(function(err) {
       console.error(err.message);
     });
@@ -91,7 +128,8 @@ class App {
     var planetId = parseInt($(event.target).data('id'));
 
     // disable button during process
-    $(this).text('Processing..').attr('disabled', true);
+    let btn = this;
+    $(btn).text('Processing..').attr('disabled', true);
 
     // get all accounts of current user
     web3.eth.getAccounts(function(error, accounts) {
@@ -108,12 +146,53 @@ class App {
       .then(function(result) {
         console.log('buy success!');
         // although it succeed, it still takes time until getCustomers() return updated list of customers
-        return linkToApp.markBuyed();
+      })
+      .then(function(){
+        linkToApp.markBuyed();
+        // window.location.reload()
       })
       .catch(function(err) {
         // enable button again on error
-        $(this).text('Buy this planet').removeAttr('disabled').addClass('btn-info').removeClass('btn-success');
-        console.log(err.message);
+        $(btn).text('Buy this planet').removeAttr('disabled').addClass('btn-info').removeClass('btn-success');
+        console.error(err.message);
+      });
+    });
+  }
+
+  handleSale(event) {
+    event.preventDefault();
+
+    var planetId = parseInt($(event.target).data('id'));
+
+    // disable button during process
+    let btn = this;
+    $(btn).text('Processing..').attr('disabled', true);
+
+    // get all accounts of current user
+    web3.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.error(error);
+      }
+
+      // get first (base) account
+      var account = accounts[0];
+
+      linkToApp.contracts.Buy.deployed().then(function(buyInstance) {
+        return buyInstance.sale(planetId, {from: account});
+      })
+      .then(function(result) {
+        console.log('sale success!');
+        // although it succeed, it still takes time until getCustomers() return updated list of customers
+        linkToApp.markBuyed();
+      })
+      .then(function(){
+        linkToApp.markBuyed();
+        window.location.reload();
+      })
+      .catch(function(err) {
+        // enable button again on error
+        $(btn).text('Sale this planet').removeAttr('disabled');
+        console.error(err.message);
       });
     });
   }
