@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Shop of planets</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="container">
+      <header class="row">
+          <h1 class="text-center container">Shop of planets</h1>
+      </header>
+
+      <div id="planetsRow" class="row">
+        <!-- Planets LOAD HERE -->
+      </div>
+    </div>
+
+    <div id="planetTemplate" style="display: none;">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="planet-card panel panel-default panel-planet">
+          <div class="panel-heading">
+            <h3 class="panel-title"></h3>
+          </div>
+          <div class="panel-body">
+            <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="" data-holder-rendered="true">
+            <p class="info"><strong>Age</strong>: <span class="planet-age"></span></p>
+            <p class="info"><strong>Location</strong>: <span class="planet-location"></span></p>
+            <p class="info"><strong>Color</strong>: <span class="planet-color"></span></p>
+            <p class="info"><span class="planet-presence-of-life-on-the-planet"></span></p>
+            <button class="btn btn-info btn-buy" type="button" data-id="0">Buy this planet</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
