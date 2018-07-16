@@ -1,35 +1,18 @@
 // let web3;
 let linkToApp;
-let currentAccount ='kk';
 
 class App {
   constructor() {
     this.web3Provider = null,
     this.contracts = {},
 
-    this.getCurrentAccount();
-
     this.init();
     this.initWeb3('http://localhost:7545');
 
-    // re-write
     this.initContract();
 
     this.setInstanceToGlobalVar();
     this.bindEvents();
-
-  }
-
-  getCurrentAccount(instance = this){
-    web3.eth.getAccounts(function(error, accounts) {
-      if (error) {
-        console.error(error);
-      }
-
-      // get first (base) account
-      instance.currentAccount = accounts[0];
-    })
-
   }
 
   init() {
@@ -187,7 +170,6 @@ class App {
       })
       .then(function(){
         linkToApp.markBuyed();
-        window.location.reload();
       })
       .catch(function(err) {
         // enable button again on error
